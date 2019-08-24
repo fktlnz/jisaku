@@ -1,0 +1,441 @@
+//共通
+* {
+    box-sizing: border-box;
+    color: #333;
+    text-decoration: none;
+}
+body {
+    margin: 0;
+}
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.hover {
+    text-decoration: none;
+    padding: 2px 5px;
+    border: 1px dotted transparent;
+    &:hover {
+        border: 1px dotted gray;
+    }
+}
+
+.message-registered {
+    color: white;
+    width: 95%;
+    background-color: rgba(51, 238, 238, .5);            
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 10px;
+    transition: 700ms ease;
+    -webkit-transition: 700ms ease;
+    &.fadeout {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+header {
+    text-align: center;
+    margin: 30px 0;
+    height: 48px;
+    h4 {
+        margin: 0;
+        line-height: 48px;
+    }
+}
+
+
+//main-board.php用
+main.board {
+    .main-board {
+        background-color: #ffe5b6;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 900px;
+        width: 95%;
+        margin: 0 auto;
+        text-align: center;        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+    
+        //main-bord
+        .all-time {
+            width: 300px;
+            margin: 0 auto 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #b0ff56;
+            display: flex;
+            display: -webkit-flex;
+            justify-content: space-between;
+    
+            .all-time-hour {
+                margin: 0 20px;
+            }
+
+            h3 {
+                margin: 0;
+            }
+        }
+    
+        .subject-list {
+            background-color: white;   
+            border-radius: 10px;
+            .subject-contents {
+                padding: 20px 10px 0;
+                a {
+                    display: block;
+                    transition: 300ms;
+                    &:hover{
+                        background-color: rgba(176, 255, 86, 0.4);
+                    }
+                }
+            }
+            .subject-item {
+                border-bottom: 1px dashed #d1d1d1;
+                padding: 10px 10px;
+                text-align: left;
+                // cursor: pointer;
+                transition: 300ms ease;
+                -webkit-transition: 300ms ease;
+                text-align: left;
+                
+                ul {
+                    // padding: 
+                    li {
+                        display: inline-block;
+                        vertical-align: middle;
+                    }
+                }
+                .circle {
+                    width: 15px;
+                    height: 15px;
+                    line-height: 100%;
+                    border-radius: 50%;
+                    margin-right: 25px;
+                    background-color: #ffe5b6;
+                }
+                .subject {
+                    width: 60%;
+    
+                }
+    
+                .time {
+                    width: 10%;
+                }
+                .garbage {
+                    display: inline-block;
+                    padding: 2px;
+                    border: 1px dotted transparent;
+                    &:hover {
+                        border: 1px dotted #000;
+                    }
+                }
+            }
+    
+            .add-subject {
+                padding: 20px 0;
+            }
+            
+        }
+    }
+}
+
+//subject.php用
+main.subject{
+    .main-board {
+        background-color: #ffe5b6;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 900px;
+        width: 95%;
+        margin: 0 auto;
+        text-align: center;
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+    
+        .subject-list {
+            background-color: white; 
+            padding: 20px; 
+            border-radius: 10px; 
+    
+            .subject-list__time-all {
+                border-bottom: 3px solid #b0ff56;
+                padding: 10px;
+                text-align: left;
+                li {
+                    vertical-align: middle;
+                }
+
+                .subject-list__time-all-item {
+                    display: flex;
+                    display: -webkit-flex;
+                    justify-content: center;
+
+                }
+                
+                #subject-list__time-all-item-hour, #subject-list__time-all-item-min {
+                    margin: 0 10px;
+                }
+                
+            }
+
+            .subject-list__time-today {                
+                padding: 10px;
+                text-align: left;
+                li {
+                    vertical-align: middle;
+                }
+
+                .subject-list__time-today-item {
+                    display: flex;
+                    display: -webkit-flex;
+                    justify-content: center;
+
+                    #subject-list__time-today-item-hour, #subject-list__time-today-item-min {
+                        margin: 0 10px;
+                    }
+
+                }
+
+                #start-timer {
+                    text-align: right;
+                    cursor: pointer;
+                }
+
+
+                
+                
+            }
+    
+            .add-subject {
+                padding: 20px 0;
+            }
+            
+        }
+
+        .to-tweet-scr {
+            margin-top: 20px;
+            text-align: right;
+            a {                
+                text-decoration: none;
+                display: inline-block;                
+                border-radius: 5px;
+                span {
+                    color: #333;;
+                }
+            }
+
+        }
+
+    }
+}
+
+//tweet.php用
+main.tweet{
+    .main-board {
+        background-color: #ffe5b6;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 900px;
+        width: 95%;
+        margin: 0 auto;
+        text-align: center;
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        
+        .tweet-board {
+
+            text-align: left;
+
+            textarea {
+                width: 100%;
+                border: none;
+                padding: 5px;
+
+                &.textarea-init {
+                    background-color: white;
+                }
+            }
+
+            .tweet-board__header, .tweet-board__text {
+                margin-bottom: 50px;
+            }
+
+            .tweet-board__header {
+                textarea {
+                    height: 50px;
+                }
+            }
+            .tweet-board__text {
+                textarea {
+                    height: 150px;
+                }
+            }
+            .tweet-board__footer {
+                textarea {
+                    height: 50px;
+                }
+            }
+
+            .submit-init {
+                background-color: #2ebafc;;
+            }
+
+            .btn-tweet {
+                display: block;
+                border-radius: 5px;
+                margin: 30px auto;
+            }
+            
+        }
+        
+
+    }
+}
+
+//signup.php用
+main.signup{
+    .main-board {
+        background-color: #ffe5b6;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 900px;
+        width: 95%;
+        margin: 0 auto;
+        text-align: center;        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }        
+        .signup-board {
+            text-align: left; 
+            .btn-start {
+                display: block;
+                margin: 0 auto;
+            }           
+        }
+    }
+}
+
+//user-form.php用
+main.user-form{
+    .main-board {
+        background-color: #ffe5b6;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 900px;
+        width: 95%;
+        margin: 0 auto;
+        text-align: center;
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .user-form-board {
+            text-align: center;
+            .user-img {
+                margin-bottom: 30px;
+                position: relative;
+                height: 100px;
+                width: 100px;
+                display: inline-block;
+                text-align: center;
+                border: 2px dashed transparent;
+                overflow: hidden;
+                .user-img__drop-input{
+                    opacity: 0;
+                    position: absolute;
+                    display: block;
+                    width: 100px;
+                    height: 100px;
+                    transform: translate(-50%,-50%);
+                    -webkit-transform: translate(-50%,-50%);
+                    top: 50%;
+                    left: 50%;
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+                .user-img__img {
+                    vertical-align: bottom;
+                    width: 100%;
+                }
+                &:hover {
+                    border: 2px dashed #aaa;
+                }
+            }            
+            .user-form-board {
+                .btn-change {
+                    display: block;
+                    margin: 0 auto;
+                }
+            }
+        }
+    }
+}
+
+//add-subject.php用
+main.add-subject{
+    .main-board {
+        background-color: #ffe5b6;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 900px;
+        width: 95%;
+        margin: 0 auto;
+        text-align: center;
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+        
+        .add-subject-board {
+            text-align: left;
+            .btn-add {
+                display: block;
+                margin: 0 auto;
+            }
+        }
+        
+
+    }
+}
+
+footer {
+    padding-bottom: 20px;
+    border-bottom: 5px solid #b0ff56;
+    margin-top: 30px;
+    padding: 0 30px 10px;
+    .footer-list {        
+        display: flex;
+        display: -webkit-flex;
+        justify-content: space-between;
+        max-width: 900px;
+        margin: 0 auto;
+        
+        
+    }
+}
