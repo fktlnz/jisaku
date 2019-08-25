@@ -92,8 +92,8 @@ require('head.php');
 
             <h1>ログイン</h1>
             <form class="signup-board" action="" method="post">
-                <div class="signup-board__name form">
-                    <label for="tweet-name">ニックネーム</label>
+                <div class="c-form form">
+                    <label class="c-form__label" for="tweet-name">ニックネーム</label>
                     <input type="text" id="js-input-name" class="text-init" name="name" value="<?php echo empty($name) ? '' : $name; ?>">
                     <div class="c-area-msg">
                     <?php 
@@ -102,8 +102,8 @@ require('head.php');
                     </div>
                 </div>
                 
-                <div class="signup-board__password form">
-                    <label for="tweet-name">パスワード(半角6文字以上)</label>
+                <div class="c-form">
+                    <label class="c-form__label" for="tweet-name">パスワード(半角6文字以上)</label>
                     <input type="password" class="text-init" name="pass" value="<?php echo empty($pass) ? '' : $pass; ?>">
                     <div class="c-area-msg">
                     <?php 
