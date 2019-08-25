@@ -3,17 +3,17 @@
   border-radius: 10px;
 }
 
-.subject-list__content {
+.subject-list__contents {
   padding: 20px 10px 0;
 }
 
-.subject-list__content a {
+.subject-list__contents a {
   display: block;
   -webkit-transition: 300ms;
   transition: 300ms;
 }
 
-.subject-list__content a:hover {
+.subject-list__contents a:hover {
   background-color: rgba(176, 255, 86, 0.4);
 }
 
@@ -311,18 +311,6 @@ main.signup .main-board .signup-board {
   background-color: white;
   padding: 20px 20px 10px;
   border-radius: 10px;
-}
-
-main.signup .main-board .signup-board .signup-board__name label {
-  margin-right: 10px;
-}
-
-main.signup .main-board .signup-board .signup-board__name span.use-ok {
-  color: green;
-}
-
-main.signup .main-board .signup-board .signup-board__name span.use-ng {
-  color: red;
 }
 
 main.signup .main-board .signup-board .btn-start {

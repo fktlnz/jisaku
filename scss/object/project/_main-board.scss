@@ -2,7 +2,7 @@
 .subject-list {
     background-color: white;   
     border-radius: 10px;
-    &__content {
+    &__contents {
         padding: 20px 10px 0;
         a {
             display: block;
@@ -20,7 +20,7 @@
         // cursor: pointer;
         transition: 300ms ease;
         -webkit-transition: 300ms ease;
-        text-align: left;
+        text-align: left;        
         
         ul {
             // padding: 
@@ -336,30 +336,11 @@ main.signup{
             padding: 20px 20px 10px;
             border-radius: 10px;
 
-            .signup-board__name {
-                label {
-                    margin-right: 10px;
-                }
-
-                span.use-ok {
-                    color: green;
-                }
-
-                span.use-ng {
-                    color: red;
-                }
-            }
-
             .btn-start {
                 display: block;
                 margin: 0 auto;
-            }
-
-            
-            
+            }            
         }
-        
-
     }
 }
 

@@ -2,9 +2,9 @@
 // Foundation
 // ==========================================================================
 
-@import "foundation/normalize";
-@import "foundation/sanitize";
-@import "foundation/_base";
+@import "foundation/normalize.css";
+@import "foundation/sanitize.css";
+@import "foundation/_base.css";
 
 // ==========================================================================
 // Layout
@@ -24,23 +24,23 @@
 // -----------------------------------------------------------------
 
 
-@import "object/component/_btn";
-@import "object/component/_map";
-@import "object/component/_form";
+@import "object/component/_btn.css";
+@import "object/component/_map.css";
+@import "object/component/_form.css";
 
 
 // -----------------------------------------------------------------
 // Project
 // -----------------------------------------------------------------
 
-@import "object/project/_main-board";
-@import "object/project/_project";
+@import "object/project/_main-board.css";
+@import "object/project/_project.css";
 
 // -----------------------------------------------------------------
 // Utility
 // -----------------------------------------------------------------
 
-@import "object/utility/utility";
+@import "object/utility/utility.css";
 
 // -----------------------------------------------------------------
 // style
