@@ -18,9 +18,14 @@ $user_id = !empty($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
 
 //勉強の項目を取得する
 $all_subject = Db::getAllSubject($user_id);
+//総勉強時間を計算
+$all_study_time=0;
+for($i=0;$i<count($all_subject);$i++) {
+    $all_study_time += getMsecTime($all_subject[$i]['time']);
+}
+$all_study_time_HMS = getHMSTime($all_study_time);
 
 debug('取得した全項目: '.print_r($all_subject, true));
-
 
 ?>
 
@@ -44,9 +49,9 @@ require('head.php');
             <h1>総勉強時間</h1>
             <ul class="all-time">
                 <li><h3>Total</h3></li>
-                <li id="all-time-hour"><h3>20</h3></li>
+                <li id="all-time-hour"><h3><?php echo $all_study_time_HMS[0]; ?></h3></li>
                 <li><h3>h</h3></li>
-                <li id="all-time-hour"><h3>30</h3></li>
+                <li id="all-time-hour"><h3><?php echo $all_study_time_HMS[1]; ?></h3></li>
                 <li><h3>min</h3></li>
             </ul>
             <div class="subject-list">
@@ -65,7 +70,7 @@ require('head.php');
                                 <li class="subject-list__circle"></li>
                                 <li class="subject-list__subject"><?php echo $data['name'] ?></li>
                                 <li class="subject-list__time" ><?php echo $data['time'] ?></li>
-                                <li class="subject-list__garbage hover" data-productid="<?php echo !empty($data['id']) ? $data['id'] : '' ?>" ><i class="fas fa-trash" style="color:#aaa"></i></li>
+                                <li class="subject-list__garbage hover js-garbage-delete" data-productid="<?php echo !empty($data['id']) ? $data['id'] : '' ?>" ><i class="fas fa-trash" style="color:#aaa"></i></li>
                             </ul>
                         </li>
                     </a>

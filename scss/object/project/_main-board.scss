@@ -38,11 +38,12 @@
             background-color: #ffe5b6;
         }
         .subject-list__subject {
-            width: 60%;
+            width: 50%;            
         }
 
         .subject-list__time {
-            width: 10%;
+            width: 20%;
+
         }
         .subject-list__garbage {
             display: inline-block;
@@ -96,7 +97,7 @@
 
 header {
     text-align: center;
-    margin: 30px 0;
+    margin: 10px 0;
     height: 48px;
     h4 {
         margin: 0;
@@ -198,6 +199,7 @@ main.subject{
                 text-align: left;
                 li {
                     vertical-align: middle;
+                    margin: 0 10px;
                 }
 
                 .subject-list__time-today-item {
@@ -281,22 +283,12 @@ main.tweet{
             .tweet-board__header, .tweet-board__text {
                 margin-bottom: 50px;
             }
-
-            .tweet-board__header {
-                textarea {
-                    height: 50px;
-                }
-            }
             .tweet-board__text {
                 textarea {
-                    height: 150px;
+                    height: 300px;
                 }
             }
-            .tweet-board__footer {
-                textarea {
-                    height: 50px;
-                }
-            }
+            
 
             .submit-init {
                 background-color: #2ebafc;;

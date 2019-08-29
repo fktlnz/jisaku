@@ -276,23 +276,13 @@ main.tweet{
                 }
             }
 
-            .tweet-board__header, .tweet-board__text {
+            .tweet-board__text {
                 margin-bottom: 50px;
             }
 
-            .tweet-board__header {
-                textarea {
-                    height: 50px;
-                }
-            }
             .tweet-board__text {
                 textarea {
                     height: 150px;
-                }
-            }
-            .tweet-board__footer {
-                textarea {
-                    height: 50px;
                 }
             }
 

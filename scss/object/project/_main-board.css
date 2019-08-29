@@ -41,11 +41,11 @@
 }
 
 .subject-list__item .subject-list__subject {
-  width: 60%;
+  width: 50%;
 }
 
 .subject-list__item .subject-list__time {
-  width: 10%;
+  width: 20%;
 }
 
 .subject-list__item .subject-list__garbage {
@@ -94,7 +94,7 @@
 
 header {
   text-align: center;
-  margin: 30px 0;
+  margin: 10px 0;
   height: 48px;
 }
 
@@ -194,6 +194,7 @@ main.subject .main-board .subject-list .subject-list__time-today {
 
 main.subject .main-board .subject-list .subject-list__time-today li {
   vertical-align: middle;
+  margin: 0 10px;
 }
 
 main.subject .main-board .subject-list .subject-list__time-today .subject-list__time-today-item {
@@ -268,16 +269,8 @@ main.tweet .main-board .tweet-board .tweet-board__header, main.tweet .main-board
   margin-bottom: 50px;
 }
 
-main.tweet .main-board .tweet-board .tweet-board__header textarea {
-  height: 50px;
-}
-
 main.tweet .main-board .tweet-board .tweet-board__text textarea {
-  height: 150px;
-}
-
-main.tweet .main-board .tweet-board .tweet-board__footer textarea {
-  height: 50px;
+  height: 300px;
 }
 
 main.tweet .main-board .tweet-board .submit-init {

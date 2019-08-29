@@ -271,20 +271,12 @@ main.tweet .main-board .tweet-board textarea.textarea-init {
   background-color: white;
 }
 
-main.tweet .main-board .tweet-board .tweet-board__header, main.tweet .main-board .tweet-board .tweet-board__text {
+main.tweet .main-board .tweet-board .tweet-board__text {
   margin-bottom: 50px;
-}
-
-main.tweet .main-board .tweet-board .tweet-board__header textarea {
-  height: 50px;
 }
 
 main.tweet .main-board .tweet-board .tweet-board__text textarea {
   height: 150px;
-}
-
-main.tweet .main-board .tweet-board .tweet-board__footer textarea {
-  height: 50px;
 }
 
 main.tweet .main-board .tweet-board .submit-init {

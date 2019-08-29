@@ -85,6 +85,50 @@ function setDispMessage($msg) {
     $_SESSION['msg'] = $msg;
 }
 
+
+//================================
+// HH:MM:SSの時間をmsec秒に変換する関数
+// $time: HH:MM:SS形式の時間
+//================================
+function getMsecTime($time) {
+    debug('HH:MM:SS⇒msecに変換します');
+    $subject_time = explode(":", $time); 
+    $subject_time_ms = $subject_time[0] * 3600000 + $subject_time[1] * 60000 +$subject_time[2] * 1000;
+    return $subject_time_ms;
+}
+
+//================================
+// msec秒を[HH,MM,SS]形式に変換する関数
+// $time: msec秒
+//================================
+function getHMSTime($time_ms) {
+
+    //h(時)
+    $h = floor($time_ms / 3600000);            
+    //m(分) = 135200 / 60000ミリ秒で割った数の商　-> 2分
+
+    //1時間（60分）を超えていた場合に以下の計算では60分未満となるようにする
+    //今日の勉強時間で表示される時間はx分x秒であり、2時間の場合も分表示120分であるため
+    $time_ms = $time_ms % 3600000;
+    $m = floor($time_ms / 60000);
+    //s(秒) = 135200 / 1000ミリ秒
+    $s = floor($time_ms % 60000 / 1000);
+
+    //HTML 上で表示の際の桁数を固定する　例）3 => 03　、 12 -> 012
+    //javascriptでは文字列数列を連結すると文字列になる
+    //文字列の末尾2桁を表示したいのでsliceで負の値(-2)引数で渡してやる。
+    $h = substr(('0'.strval($h)),-2); 
+    $m = substr(('0'.strval($m)),-2); 
+    $s = substr(('0'.strval($s)),-2);
+
+    //データベース格納用
+    $time_HMS[]=$h;
+    $time_HMS[]=$m;
+    $time_HMS[]=$s;
+
+    return $time_HMS;
+}
+
 /**
  * 画像をサーバーにアップロードし、画像格納パスを返す
  *
@@ -439,7 +483,7 @@ class Db {
 
         try {
             $dbh = Db::dbConnect();
-            $sql = 'SELECT name FROM subject WHERE id=:s_id AND user_id=:u_id AND delete_flg=0';
+            $sql = 'SELECT name, time FROM subject WHERE id=:s_id AND user_id=:u_id AND delete_flg=0';
             $data = array(':s_id' => $subject_id, ':u_id' => $user_id);
         
             $stmt = Db::queryPost($dbh, $sql, $data);
@@ -475,6 +519,33 @@ class Db {
                 debug('項目の追加に失敗しました');
                 return false;
             }
+        }catch(Exception $e){
+            debug('クエリに失敗しました');
+            debug('失敗したクエリ：'.$e->getMessages());
+            return false;
+        }
+    }
+
+    //勉強した時間をデータベースに保存する
+    static public function setStudyTime($subject_id, $user_id, $study_time) {
+        debug('勉強時間を更新します');
+
+        try {
+            $dbh = Db::dbConnect();
+            $sql = 'UPDATE subject SET `time`=:st_time WHERE id =:p_id AND user_id=:u_id';
+            $data = array(':st_time' => $study_time, ':p_id' => $subject_id, ':u_id' => $user_id );
+        
+            $stmt = Db::queryPost($dbh, $sql, $data);
+
+            if($stmt) {
+                debug('勉強時間を更新しました');
+                return true;
+
+            }else{
+                debug('勉強時間を更新できませんでした');
+                return false;
+            }
+
         }catch(Exception $e){
             debug('クエリに失敗しました');
             debug('失敗したクエリ：'.$e->getMessages());
@@ -525,6 +596,119 @@ class Db {
 
             }else{
                 debug('クエリが失敗しました。');
+                debug('失敗したクエリ：'.$sql);
+                return false;
+            }
+
+        }catch(Exception $e){
+            debug('Exceptionエラー');
+            debug('行：'.__LINE__.'　関数：'.__FUNCTION__);
+            debug('エラーメッセージ：'.$e->getMessage());
+            return false;
+        }
+    }
+
+    //ユーザーのtweet情報を取得する
+    static public function getTweetInfo($user_id) {
+        debug('ユーザーのツイート情報を取得します');
+        try {
+            $dbh = Db::dbConnect();
+            $sql = 'SELECT count, ck, cs, at, ats FROM tweet WHERE id =:u_id';
+            $data = array(':u_id' => $user_id);
+
+            $stmt = Db::queryPost($dbh, $sql, $data);
+
+            
+            if($stmt) {
+                if($stmt->rowCount() > 0){
+                    debug('tweet情報を持っているユーザーです');
+                    debug('ユーザーのツイート情報の取得に成功しました');
+                    return $stmt->fetch(PDO::FETCH_ASSOC);
+                }else {
+                    debug('tweet情報を持っていません');
+                    debug('tweetテーブルを追加します');
+
+                    $sql_insert = 'INSERT INTO tweet (id) VALUES (:u_id)';
+                    $data_insert = array(':u_id' => $user_id);
+                
+                    $stmt = Db::queryPost($dbh, $sql_insert, $data_insert);
+
+                    if($stmt) {
+                        debug('初めてのツイート：レコードを追加しました');
+                        debug('追加レコード：'.$stmt->fetch(PDO::FETCH_ASSOC));
+                        return array(
+                            'count' => 1,
+                            'id' => $user_id
+                        );
+
+                    }else{
+                        debug('初めてのツイート：レコード追加できませんでした');
+                        return false;
+                    }
+                }
+                
+
+            }else{
+                debug('クエリが失敗しました。');
+                debug('失敗したクエリ：'.$sql);
+                return false;
+            }
+
+        }catch(Exception $e){
+            debug('Exceptionエラー');
+            debug('行：'.__LINE__.'　関数：'.__FUNCTION__);
+            debug('エラーメッセージ：'.$e->getMessage());
+            return false;
+        }
+    }
+
+    //ユーザーのtweet情報を取得する
+    static public function CountUpTweet($user_id) {
+        debug('ユーザーのツイート回数を１増やします');
+        try {
+            $dbh = Db::dbConnect();
+            $sql = 'SELECT count, ck, cs, at, ats FROM tweet WHERE id =:u_id';
+            $data = array(':u_id' => $user_id);
+            
+            $stmt_select = Db::queryPost($dbh, $sql, $data);
+
+            if($stmt_select) {
+                if($stmt_select->rowCount() > 0){
+                    debug('すでにtweetレコードが追加されています:rowCount()=>'.$stmt_select->rowCount());
+                    //すでにレコードが登録されている（すでに1度以上、ツイートしている）
+                    //ツイート回数を増やす
+                    $rst = $stmt_select->fetch(PDO::FETCH_ASSOC);
+                    $count = $rst['count'];
+                    debug('今のツイート回数:'.$count);
+                    $count_tweet_new = ++$count;
+                    debug('プラスしたツイート回数:'.$count_tweet_new);
+                    $sql = 'UPDATE tweet SET count=:count_new WHERE id =:u_id';
+                    $data = array(':u_id' => $user_id, ':count_new' => $count_tweet_new);
+                
+                    $stmt = Db::queryPost($dbh, $sql, $data);
+                    debug('ユーザーのツイート回数を１増やすのに成功しました');
+                    return true;
+                }else{
+                    //レコードが存在しない
+                    $sql = 'INSERT INTO tweet id VALUES :u_id ';
+                    $data = array(':u_id' => $user_id);
+                
+                    $stmt = Db::queryPost($dbh, $sql, $data);
+
+                    if($stmt) {
+                        debug('初めてのツイート：レコードを追加しました');
+                        debug('追加レコード：'.$stmt->fetch(PDO::FETCH_ASSOC));
+                        return $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    }else{
+                        debug('初めてのツイート：レコード追加できませんでした');
+                        return false;
+                    }
+
+                }
+
+            }else{
+                debug('ユーザーのツイート回数を１増やすのに失敗しました');
                 debug('失敗したクエリ：'.$sql);
                 return false;
             }
