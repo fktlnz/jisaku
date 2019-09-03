@@ -1,9 +1,5 @@
 gulp_env/node_modules/
-gulp_env/src/
-gulp_env/dist/css/style.css
-gulp_env/dist/index.html
 scss/backup/
-vendor/
 composer.phar
 composer.lock
 composer.json
