@@ -55,16 +55,18 @@ if(!empty($_POST)){
                     <h1>今日の勉強時間</h1>
                     <ul class="subject-list__time-today-item mb30">
                         <li><h3>Total:</h3></li>
+                        <li id="subject-list__time-today-item-hour"><h3 id="js-timer-hour">00</h3></li>
+                        <li><h3>時間</h3></li>
                         <li id="subject-list__time-today-item-min"><h3 id="js-timer-min">00</h3></li>
                         <li><h3>分</h3></li>
                         <li id="subject-list__time-today-item-sec"><h3 id="js-timer-sec">00</h3></li>
                         <li><h3>秒</h3></li>
                     </ul>
-                    <div id="start-timer"><span id="js-timer-btn" class="hover" data-subid="<?php echo $sub_id; ?>" data-time="<?php echo $subject_time_ms; ?>">測定開始</span></div>
+                    <div id="start-timer"><span id="js-timer-btn" class="hover" data-subid="<?php echo $sub_id; ?>" data-time="<?php echo $subject_time_ms; ?>"><i class="far fa-clock" style="margin-right: 5px;"></i>測定開始</span></div>
                 </div>
             </div>
             <div class="to-tweet-scr">
-                <a class="hover" href="tweet.php?<?php echo 'sub_id='.$sub_id;?>"><span>投稿画面へ</span></a>
+                <a class="hover" href="tweet.php?<?php echo 'sub_id='.$sub_id;?>"><span><i class="fab fa-twitter" style="margin-right:5px; color:#2ebafc;"></i>投稿する</span></a>
             </div>
         </section>
     </main>

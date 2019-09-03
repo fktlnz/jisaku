@@ -114,7 +114,7 @@ function getHMSTime($time_ms) {
     //s(秒) = 135200 / 1000ミリ秒
     $s = floor($time_ms % 60000 / 1000);
 
-    //HTML 上で表示の際の桁数を固定する　例）3 => 03　、 12 -> 012
+    //HTML 上で表示の際の桁数を固定する　例）3 => 03　、 12 -> 12
     //javascriptでは文字列数列を連結すると文字列になる
     //文字列の末尾2桁を表示したいのでsliceで負の値(-2)引数で渡してやる。
     $h = substr(('0'.strval($h)),-2); 
@@ -584,7 +584,7 @@ class Db {
         debug('ユーザー情報を取得します');
         try {
             $dbh = Db::dbConnect();
-            $sql = 'SELECT username, password, account, age, pic FROM users WHERE id =:u_id AND delete_flg=0';
+            $sql = 'SELECT username, password, account, age, pic, ck, cs, `at`, ats FROM users WHERE id =:u_id AND delete_flg=0';
             $data = array(':u_id' => $user_id);
 
             $stmt = Db::queryPost($dbh, $sql, $data);

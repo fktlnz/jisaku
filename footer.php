@@ -1,3 +1,44 @@
+<?php 
+//現在実行中のスクリプトファイルによってフッター部を切り替え
+//$_SERVER['PHP_SELF']はドメインからのパスを返す。例えばlogin.phpにいるときは「/jisaku-app-git/login.php」が返ってくるので、
+//さらにbasename関数を使うことでファイル名だけを取り出せる
+if(basename($_SERVER['PHP_SELF']) === 'main-board.php'){
+    ?>
+    <footer>
+        <ul class="footer-list">
+            <li> <a class="hover" href="user-form.php">登録変更</a></li>
+            <li> <a class="hover" href="logout.php">ログアウト</a> </li>
+        </ul>
+    </footer>
+    <?php
+}else if(basename($_SERVER['PHP_SELF']) === 'subject.php'){
+    ?>
+    <footer>
+        <ul class="footer-list">
+            <li> <a class="hover" href="main-board.php">戻る</a></li>
+        </ul>
+    </footer>
+    <?php
+}else if(basename($_SERVER['PHP_SELF']) === 'tweet.php'){
+    ?>
+    <footer>
+        <ul class="footer-list">
+            <li> <a class="hover" href="subject.php?sub_id=<?php echo !empty($sub_id) ? $sub_id : '';?>">戻る</a></li>
+        </ul>
+    </footer>
+    <?php
+}
+
+
+
+?>
+
+
+
+
+
+
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <script>
 $(function(){
@@ -24,6 +65,8 @@ $(function(){
             console.log('Ajax Error');
         });
     });
+
+    
 
     //画像のドロップ
     $('.js-img-drop').on('dragover', function(e) {
@@ -61,9 +104,47 @@ $(function(){
     });
 
     //
+    //投稿画面　文字数測定
+    //
+
+    //文字列をバイト数で返す関数
+    $.getByteLength = function(value){
+        var result = 0;
+        for(var i=0;i<value.length;i++){
+            var chr = value.charCodeAt(i);
+            if((chr >= 0x00 && chr < 0x81) ||
+            (chr === 0xf8f0) ||
+            (chr >= 0xff61 && chr < 0xffa0) ||
+            (chr >= 0xf8f1 && chr < 0xf8f4)){
+            //半角文字の場合は1を加算
+            result += 1;
+            }else{
+            //それ以外の文字の場合は2を加算
+            result += 2;
+            }
+        }
+        //結果を返す
+        return result;
+    };
+    //初期画面で文字数を表示する
+    // $('.js-tweet-board__textcount').text($.getByteLength($('.js-tweet-board__textarea').val()));
+    $('.js-tweet-board__textarea').on('keyup', function(e){
+        $('.js-tweet-board__textcount').text($.getByteLength($(this).val()));
+        if($.getByteLength($(this).val()) > 280){
+            e.preventDefault();
+            e.stopPropagation();
+            $('.js-tweet-submit-disabled').prop('disabled',true);
+        }else {
+            $('.js-tweet-submit-disabled').prop('disabled',false);
+        }
+    })
+
+
+    //
     //勉強時間測定
     //
 
+    var $time_hour = $('#js-timer-hour');
     var $time_min = $('#js-timer-min');
     var $time_sec = $('#js-timer-sec');
     var $time_btn = $('#js-timer-btn');
@@ -89,13 +170,13 @@ $(function(){
 
         //1時間（60分）を超えていた場合に以下の計算では60分未満となるようにする
         //今日の勉強時間で表示される時間はx分x秒であり、2時間の場合も分表示120分であるため
-        elapsedTime= elapsedTime % 3600000;
+        var elapsedTime_removeh= elapsedTime % 3600000;
         
         //m(分) = 135200 / 60000ミリ秒で割った数の商　-> 2分
-        var m = Math.floor(elapsedTime / 60000);
+        var m = Math.floor(elapsedTime_removeh / 60000);
 
         //s(秒) = 135200 / 1000ミリ秒
-        var s = Math.floor(elapsedTime % 60000 / 1000);
+        var s = Math.floor(elapsedTime_removeh % 60000 / 1000);
 
         //HTML 上で表示の際の桁数を固定する　例）3 => 03　、 12 -> 012
         //javascriptでは文字列数列を連結すると文字列になる
@@ -105,6 +186,7 @@ $(function(){
         s = ('0' + s).slice(-2);
 
         //HTMLのid　timer部分に表示させる　
+        $time_hour.text(h);
         $time_min.text(m);
         $time_sec.text(s);
     }
@@ -128,6 +210,7 @@ $(function(){
 
     //startボタンにクリック時のイベントを追加(タイマースタートイベント)
     $time_btn.on('click',function(){
+        console.log('測定開始ボタンおされた！')
         $this = $(this);
 
         if($this.hasClass('studying')){
@@ -152,10 +235,13 @@ $(function(){
 
             //h(時)
             var h_p = Math.floor(time_db / 3600000);            
+
+            var time_db_removeh= time_db % 3600000;
+
             //m(分) = 135200 / 60000ミリ秒で割った数の商　-> 2分
-            var m_p = Math.floor(time_db / 60000);
+            var m_p = Math.floor(time_db_removeh / 60000);
             //s(秒) = 135200 / 1000ミリ秒
-            var s_p = Math.floor(time_db % 60000 / 1000);
+            var s_p = Math.floor(time_db_removeh % 60000 / 1000);
 
             //HTML 上で表示の際の桁数を固定する　例）3 => 03　、 12 -> 012
             //javascriptでは文字列数列を連結すると文字列になる
@@ -195,5 +281,14 @@ $(function(){
             countUp();
         }
     });
-})    
+
+
+})   
+$(function(){
+    //tweetApiKeyを設定していない場合は、
+    //aタグのhrefにtwitter投稿画面遷移先のURLを付与する
+    var tweet_content = $('.js-tweet-board__textarea').val();
+    $('.js-tweet-add-link').attr('href','https://twitter.com/intent/tweet?text='+encodeURIComponent(tweet_content));
+
+}) 
 </script>

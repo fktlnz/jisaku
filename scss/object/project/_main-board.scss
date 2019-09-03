@@ -1,3 +1,7 @@
+.c-area-msg {
+    color: red;
+}
+
 
 .subject-list {
     background-color: white;   
@@ -46,9 +50,9 @@
 
         }
         .subject-list__garbage {
-            display: inline-block;
             padding: 2px;
             border: 1px dotted transparent;
+            float: right;
             &:hover {
                 border: 1px dotted #000;
             }
@@ -291,13 +295,30 @@ main.tweet{
             
 
             .submit-init {
-                background-color: #2ebafc;;
+                background-color: #2ebafc;
             }
 
             .btn-tweet {
                 display: block;
                 border-radius: 5px;
+                // margin: 30px auto;
+            }
+
+            .btn-tweet-display {
+                padding: 5px 10px;
+                color: white;
+                display: inline-block;
+                border-radius: 5px;
                 margin: 30px auto;
+                background-color: #2ebafc;
+                margin: 0;
+
+            }
+
+            .js-tweet-submit-disabled:disabled {
+                background-color: gray;
+                color: #aaa;
+                cursor: not-allowed;
             }
             
         }

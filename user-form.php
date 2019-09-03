@@ -29,7 +29,7 @@ if(!empty($_POST)){
     //$pass_re = $_POST['pass_re'];
 
     //twitterアカウント
-    $account = !empty($_POST['account']) ? $_POST['account'] : '';
+    $account = !empty($_POST['account']) ? $_POST['account'] : '';   
     if($account !== $dbFormData['account']){
         //accountフォームチェック(passwordチェックと同じものを使用) 
         $formchecker->validHalf($account, 'account');//半角チェック
@@ -37,6 +37,28 @@ if(!empty($_POST)){
     }
     //age
     $age = !empty($_POST['age']) ? $_POST['age'] : '';
+
+    //Twitter developer
+    $ck = !empty($_POST['ck']) ? $_POST['ck'] : '';     //ConsumerKey
+    $cs = !empty($_POST['cs']) ? $_POST['cs'] : '';     //ConsumerSecret
+    $at = !empty($_POST['at']) ? $_POST['at'] : '';     //AccessToken
+    $ats = !empty($_POST['ats']) ? $_POST['ats'] : '';  //AccessTokenSecret
+    if($ck !== $dbFormData['ck']){
+        //accountフォームチェック(passwordチェックと同じものを使用) 
+        $formchecker->validHalf($ck, 'ck');//半角チェック
+    }
+    if($cs !== $dbFormData['cs']){
+        //accountフォームチェック(passwordチェックと同じものを使用) 
+        $formchecker->validHalf($cs, 'cs');//半角チェック
+    }
+    if($at !== $dbFormData['at']){
+        //accountフォームチェック(passwordチェックと同じものを使用) 
+        $formchecker->validHalf($at, 'at');//半角チェック
+    }
+    if($ats !== $dbFormData['ats']){
+        //accountフォームチェック(passwordチェックと同じものを使用) 
+        $formchecker->validHalf($ats, 'ats');//半角チェック
+    }
 
     //password再入力フォームチェック
     //$formchecker->validMatch($pass, $pass_re, 'pass_re');
@@ -46,6 +68,7 @@ if(!empty($_POST)){
     debug('$_FILES: '.print_r($_FILES['pic'], true));
 
     if(empty($global_msg)){
+        debug('$global_msg:'.$global_msg);
         debug('フォームチェックOK');
         debug('ユーザー情報の変更を実施します。');
 
@@ -54,8 +77,8 @@ if(!empty($_POST)){
 
         try {
             $dbh = Db::dbConnect();
-            $sql = 'UPDATE users SET account=:account, age=:age, pic=:pic WHERE id =:u_id AND delete_flg=0';
-            $data = array(':u_id' => $user_id, ':account' => $account, ':age' => $age, ':pic' => $pic);
+            $sql = 'UPDATE users SET account=:account, age=:age, pic=:pic, ck=:ck, cs=:cs, `at`=:at, ats=:ats WHERE id =:u_id AND delete_flg=0';
+            $data = array(':u_id' => $user_id, ':account' => $account, ':age' => $age, ':pic' => $pic, ':ck' => $ck, ':cs' => $cs, ':at' => $at, ':ats' => $ats);
             
             $stmt = Db::queryPost($dbh, $sql, $data);
 
@@ -74,13 +97,12 @@ if(!empty($_POST)){
             debug('エラー発生！：'.$e->getMessage());
         }
 
+    }else {
+        setDispMessage('変更に失敗しました！記載内容を確認してください');
     }
 
 }else{
     //POSTされていないときは、DBからユーザー情報を取得して表示する
-
-    
-
     
     //password
     $pass = getUserForm('password');
@@ -131,28 +153,11 @@ if(!empty($_POST)){
                         if(!empty($global_msg['name'])) echo $global_msg['name'];
                         ?>
                         </div>
-                    </div>   
-
-                    <!-- <div class="user-form-board__password form">
-                        <label for="tweet-name">パスワード(半角6文字以上)</label>
-                        <input type="password" class="text-init" name="pass" value="<?php echo empty($pass) ? '' : $pass; ?>">
-                        <div class="c-area-msg">
-                        <?php 
-                        if(!empty($global_msg['pass'])) echo $global_msg['pass'];
-                        ?>
-                        </div>
+                    </div> 
+                    <div class="c-form txt_left">
+                        <label for="tweet-name">年齢</label>
+                        <input type="text" class="text-init" name="age"  value="<?php echo getUserForm('age'); ?>">                        
                     </div>
-                    
-                    <div class="user-form-board__password-re form">
-                        <label for="tweet-name">パスワード再入力</label>
-                        <input type="password" class="text-init" name="pass_re" value="<?php echo empty($pass_re) ? '' : $pass_re; ?>">
-                        <div class="c-area-msg">
-                        <?php 
-                        if(!empty($global_msg['pass_re'])) echo $global_msg['pass_re'];
-                        ?>
-                        </div>
-                    </div> -->
-
                     <div class="c-form txt_left">
                         <label for="tweet-name">ツイッターアカウント</label>
                         <input type="text" class="text-init" name="account" value="<?php echo getUserForm('account'); ?>">
@@ -162,11 +167,44 @@ if(!empty($_POST)){
                         ?>
                         </div>
                     </div> 
-
                     <div class="c-form txt_left">
-                        <label for="tweet-name">年齢</label>
-                        <input type="text" class="text-init" name="age"  value="<?php echo getUserForm('age'); ?>">                        
-                    </div>
+                        <label for="tweet-name">ConsumerKey</label>
+                        <input type="text" class="text-init" name="ck" value="<?php echo getUserForm('ck'); ?>">
+                        <div class="c-area-msg">
+                        <?php 
+                        if(!empty($global_msg['ck'])) echo $global_msg['ck'];
+                        ?>
+                        </div>
+                    </div> 
+                    <div class="c-form txt_left">
+                        <label for="tweet-name">ConsumerSecret</label>
+                        <input type="text" class="text-init" name="cs" value="<?php echo getUserForm('cs'); ?>">
+                        <div class="c-area-msg">
+                        <?php 
+                        if(!empty($global_msg['cs'])) echo $global_msg['cs'];
+                        ?>
+                        </div>
+                    </div> 
+                    <div class="c-form txt_left">
+                        <label for="tweet-name">AccessToken</label>
+                        <input type="text" class="text-init" name="at" value="<?php echo getUserForm('at'); ?>">
+                        <div class="c-area-msg">
+                        <?php 
+                        if(!empty($global_msg['at'])) echo $global_msg['at'];
+                        ?>
+                        </div>
+                    </div> 
+                    <div class="c-form txt_left">
+                        <label for="tweet-name">AccessTokenSecret</label>
+                        <input type="text" class="text-init" name="ats" value="<?php echo getUserForm('ats'); ?>">
+                        <div class="c-area-msg">
+                        <?php 
+                        if(!empty($global_msg['ats'])) echo $global_msg['ats'];
+                        ?>
+                        </div>
+                    </div> 
+
+                    
     
                     <input type="submit" class="btn-change submit-init" value="変更する" >
                 </form>

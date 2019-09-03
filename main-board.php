@@ -83,14 +83,6 @@ require('head.php');
             </div>
         </section>
     </main>
-
-    <footer>
-        <ul class="footer-list">
-            <li> <a class="hover" href="user-form.php">登録変更</a></li>
-            <li> <a class="hover" href="logout.php">ログアウト</a> </li>
-        </ul>
-    </footer>
-
     <?php require('footer.php'); ?>
     
 </body>

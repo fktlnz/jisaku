@@ -41,7 +41,7 @@ if(!empty($_POST)){
                 debug('クエリ成功');
                 if(password_verify($pass, array_shift($rst))){
                     debug('ユーザー認証成功。');
-                    $sestime = 60*60; //セッションの有効時間　デフォルト１時間
+                    $sestime = 60*60*24; //セッションの有効時間　デフォルト１時間
                     //login時間を記録
                     $_SESSION['login_time'] = time();//
     
