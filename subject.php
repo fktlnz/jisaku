@@ -24,10 +24,6 @@ $subject_time = explode(":", $subject['time']);
 $subject_time_ms = $subject_time[0] * 3600000 + $subject_time[1] * 60000 +$subject_time[2] * 1000;
 
 if(!empty($_POST)){
-
-
-
-
 }
 
 

@@ -53,7 +53,7 @@ if(!empty($_POST)){
     }
     if($at !== $dbFormData['at']){
         //accountフォームチェック(passwordチェックと同じものを使用) 
-        $formchecker->validHalf($at, 'at');//半角チェック
+        //$formchecker->validHalf($at, 'at');//半角チェック
     }
     if($ats !== $dbFormData['ats']){
         //accountフォームチェック(passwordチェックと同じものを使用) 
