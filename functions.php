@@ -412,9 +412,15 @@ class Db {
     //DB接続関数
     static public function dbConnect(){
     //DBへの接続準備
-    $dsn = 'mysql:dbname=myapp;host=localhost;charset=utf8';
+    $dsn = 'mysql:dbname=myapp;host=localhost;charset=utf8';    
     $user = 'root';
     $password = 'root';
+
+    //=== Xserver接続情報 ===//
+    //$dsn = 'mysql:dbname=fktlnz_dbsupport;host=mysql8005.xserver.jp;charset=utf8';
+    //$user = 'fktlnz_root';
+    //$password = '12345678';
+
     $options = array(
         // SQL実行失敗時にはエラーコードのみ設定
         PDO::ATTR_ERRMODE => PDO::ERRMODE_SILENT,
